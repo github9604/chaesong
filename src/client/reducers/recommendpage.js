@@ -1,7 +1,15 @@
 import * as types from '../actions/ActionType';
 
 const initialState = {
-    //초기화
+    list: {
+        status: 'INIT',
+        data: [],
+        isLast: false
+    },
+    status: {
+        valid: false,
+        isLoggedIn: false
+    }
 };
 
 export default function recommendpage(state = initialState, action) {

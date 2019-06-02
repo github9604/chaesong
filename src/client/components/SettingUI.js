@@ -45,7 +45,7 @@ class SettingUI extends Component{
         let weight = this.state.weight;
         let active = this.state.active;
         let vegantype = this.state.vegantype;
-        console.log("타입" + vegantype+" 활동량 " + active +" 성별 " +sex);
+        console.log("타입" + vegantype +" 활동량 " + active +" 성별 " +sex);
 
         this.props.onRegister( birthyear, sex, height, weight, active, vegantype).then(
             (result) => {
@@ -129,6 +129,7 @@ class SettingUI extends Component{
                                         <div class="form-group">
                                             <label for="exampleFormControlSelect1">채식타입</label>
                                             <select value={this.state.vegantype} onChange={this.vegantypeChange} className="form-control" name="vegantype" id="exampleFormControlSelect1 ">
+                                                <option selected>채식타입을 선택해주세요!</option>
                                                 <option name="vegantype" value="1">페스코 베지테리언</option>
                                                 <option name="vegantype" value="2">락토오보 베지테리언</option>
                                                 <option name="vegantype" value="3">락토 베지테리언</option>

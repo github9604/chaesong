@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Cookies from 'js-cookie';
+import {ScrapView} from "./index";
+import {scrapListRequest} from "../actions/personal";
+import {connect} from "react-redux";
 
 class RecommendPage extends Component{
     constructor(props){
@@ -11,18 +14,18 @@ class RecommendPage extends Component{
         }
     } // cookie
     render(){
-        const userID = Cookies.get('member');
-        const loginSuccess = (
-            <div>
-                <h1>
-                    This is RecommendPage. Here are the 5 randomly chosen recipes for { userID },,,
-                </h1>
-                <h2>
-
-                </h2>
+        return(
+            <div className="main-panel" id="main-panel">
+                <div className="content">
+                    <div className="container-fluid">
+                        <h4 className="page-title">스크랩 레시피</h4>
+                        <div className="row">
+                            <h3> hello </h3>
+                        </div>
+                    </div>
+                </div>
             </div>
-        );
-
+        )
     }
 }
 

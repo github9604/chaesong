@@ -74,7 +74,7 @@ class App extends Component {
     }
 
     render(){
-        let re = /(login|register|startpage|recipeview)/;
+        let re = /(login|register|startpage|recipeview|recommendview)/;
         let isAuth = re.test(this.props.location.pathname);
         return (
             <div>
