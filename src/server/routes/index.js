@@ -9,6 +9,8 @@ import recommendPage from './recommendPage';
 import eat from './eat';
 import search from './search';
 import ingredient from './ingredient';
+import mySetting from './mySetting';
+
 const router = express.Router();
 
 router.use('/MemberJoin', MemberJoin);
@@ -22,5 +24,6 @@ router.use('/recommendpage', recommendPage);
 router.use('/eat', eat);
 router.use('/search',search);
 router.use('/ingredient',ingredient);
+router.use('/mySetting',mySetting);
 
 export default router;

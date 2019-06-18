@@ -125,7 +125,7 @@ router.post('/refreshsignup', (req, res) => {
     new_calorieForDay = calorieForDay(req.body.height, req.body.weight, req.body.active);
 
     let session = req.session;
-    let new_query = 'UPDATE memberJoins SET memberJoins.weight = :now_weight, memberJoins.calorieForDay = :now_calorieForDay, memberJoins.active = :now_active, memberJoins.vegantype =:now_vegantype, memberJoins.birthyear = :now_birth, memberJoins.height = :now_height WHERE memberJoins.user_id = :now_user';
+    let new_query = 'UPDATE memberJoins SET memberJoins.weight = :now_weight, memberJoins.calorieForDay = :now_calorieForDay, memberJoins.active = :now_active, memberJoins.vegantype = :now_vegantype, memberJoins.birthyear = :now_birth, memberJoins.height = :now_height, memberJoins.sex = :now_sex WHERE memberJoins.user_id = :now_user';
     let values = {
         now_user: session.loginInfo.user_id,
         now_height: req.body.height,
@@ -133,6 +133,7 @@ router.post('/refreshsignup', (req, res) => {
         now_weight: req.body.weight,
         now_active : req.body.active,
         now_vegantype : req.body.vegantype,
+        now_sex : req.body.sex,
         now_calorieForDay : new_calorieForDay
     };
     sequelize.query(new_query, {replacements: values})

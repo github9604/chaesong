@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Cookies from 'js-cookie';
 import {RecipeViewTest} from "./index";
 import {eatRequest, recipeListRequest, recipeSearchRequest, scrapRequest} from "../actions/recipe";
+import {scrapDeleteRequest} from "../actions/personal";
 import {connect} from "react-redux";
 import Modal from "./Header";
 
@@ -18,6 +19,21 @@ class Main extends Component{
         }
     } // cookie
 
+    handleScrapDelete = (user_id, recipe_code) =>{
+        console.log("scrap delete container ", user_id, recipe_code);
+        return this.props.scrapDeleteRequest(user_id, recipe_code).then(
+            ()=>{
+                if(this.props.scrapdeletestatus === "SUCCESS"){
+                    console.log("scrap delete container success");
+                    return true;
+                }else{
+                    console.log("scrap delete container fail");
+                    return false;
+                }
+            }
+        );
+    }
+
     handleScrap = (user_id, recipe_code) =>{
         console.log("scrap container ", user_id, recipe_code);
         return this.props.scrapRequest(user_id, recipe_code).then(
@@ -26,6 +42,10 @@ class Main extends Component{
                     console.log("scrap container success");
                     return true;
                 }else{
+                    let con = confirm("이미 스크랩한 레시피입니다.\n삭제하시겠습니까?");
+                    if (con){
+                        this.handleScrapDelete(user_id,recipe_code);
+                    }
                     console.log("scrap container fail");
                     return false;
                 }
@@ -33,15 +53,19 @@ class Main extends Component{
         );
     }
 
-    handleEat= (user_id, recipe_code) =>{
-        console.log("eat container ", user_id, recipe_code);
-        return this.props.eatRequest(user_id, recipe_code).then(
+    handleEat= (user_id, recipe_code, option) =>{
+        console.log("eat container ", user_id, recipe_code, option);
+        return this.props.eatRequest(user_id, recipe_code, option).then(
             ()=>{
                 if(this.props.eatstatus === "SUCCESS"){
                     console.log("eat container success");
                     return true;
                 }else{
                     console.log("eat container fail");
+                    let con = confirm("이미 오늘 먹은 음식입니다.\n더 추가하시겠습니까?");
+                    if(con){
+                        this.props.eatRequest(user_id,recipe_code, 1);
+                    }
                     return false;
                 }
             }
@@ -150,6 +174,7 @@ const mapStateToProps = (state) => {
         errorCode : state.recipe.scrap.error,
         searchstatus: state.search.status,
         searchData : state.search.data,
+        scrapdeletestatus: state.personalpage.scrap.scrapstatus
     };
 };
 
@@ -161,11 +186,14 @@ const mapDispatchToProps = (dispatch) => {
         scrapRequest: (user_id, recipe_code) =>{
             return dispatch(scrapRequest(user_id, recipe_code));
         },
-        eatRequest: (user_id, recipe_code) =>{
-            return dispatch(eatRequest(user_id, recipe_code));
+        eatRequest: (user_id, recipe_code, option) =>{
+            return dispatch(eatRequest(user_id, recipe_code,  option));
         },
         recipeSearchRequest:(searchWord, seafood, milk, egg) =>{
             return dispatch(recipeSearchRequest(searchWord, seafood, milk, egg));
+        },
+        scrapDeleteRequest: (user_id, recipe_code) =>{
+            return dispatch(scrapDeleteRequest(user_id, recipe_code));
         }
     };
 };

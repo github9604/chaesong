@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import PropTypes from "prop-types";
 import CanvasJSReact from '../../canvasjs.react.js';
 import {connect} from "react-redux";
-import {eatenListRequest} from "../actions/personal";
+import {eatenListRequest, eatDeleteRequest} from "../actions/personal";
+import EatView from "./EatView";
 const CanvasJS = CanvasJSReact.CanvasJS;
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
@@ -10,6 +11,22 @@ class NutritionGraph extends Component{
 
     componentDidMount(){
         this.props.eatenListRequest(true, undefined);
+    }
+
+    handleEatDelete = (user_id, ingredient_code, EATEN_DATE, EATEN_TIME, option) =>{
+        console.log("eat delete container ", user_id, ingredient_code, EATEN_DATE, EATEN_TIME, option);
+        return this.props.eatDeleteRequest(user_id, ingredient_code, EATEN_DATE, EATEN_TIME, option).then(
+            ()=>{
+                if(this.props.eatStatus === "SUCCESS"){
+                    console.log("eat delete container success");
+                    this.props.eatenListRequest(true, undefined);
+                    return true;
+                }else{
+                    console.log("eat delete container fail");
+                    return false;
+                }
+            }
+        );
     }
 
     render(){
@@ -57,13 +74,13 @@ class NutritionGraph extends Component{
                 indexLabel: "{y}",
                 indexLabelFontColor: "white",
                 dataPoints: [
-                    {label: "ENERGY", y: totalAmount0},
-                    {label: "PROCNP", y: totalAmount1},
-                    {label: "FAT(지방)", y: totalAmount2},
-                    {label: "CHOTDF", y: totalAmount3},
-                    {label: "CA", y: totalAmount4},
-                    {label: "NA", y: totalAmount5},
-                    {label: "FE", y: totalAmount6}
+                    {label: "칼로리", y: totalAmount0},
+                    {label: "단백질", y: totalAmount1},
+                    {label: "지방", y: totalAmount2},
+                    {label: "탄수화물", y: totalAmount3},
+                    {label: "칼슘", y: totalAmount4},
+                    {label: "나트륨", y: totalAmount5/10000},
+                    {label: "철분", y: totalAmount6}
                 ]
             },
                 {
@@ -74,13 +91,13 @@ class NutritionGraph extends Component{
                     indexLabel: "{y}",
                     indexLabelFontColor: "white",
                     dataPoints: [
-                        {label: "ENERGY", y: (100-totalAmount0 > 0) ? 100-totalAmount0 : 0},
-                        {label: "PROCNP", y: 100-totalAmount1},
-                        {label: "FAT(지방)", y: 100-totalAmount2},
-                        {label: "CHOTDF", y: 100-totalAmount3},
-                        {label: "CA", y: 100-totalAmount4},
-                        {label: "NA", y: 100-totalAmount5},
-                        {label: "FE", y: 100-totalAmount6}
+                        {label: "칼로리", y: (2100-totalAmount0 > 0) ? 2100-totalAmount0 : 0},
+                        {label: "단백질", y: 100-totalAmount1},
+                        {label: "지방", y: 100-totalAmount2},
+                        {label: "탄수화물", y: 100-totalAmount3},
+                        {label: "칼슘", y: 650-totalAmount4},
+                        {label: "나트륨", y: 1.5-(totalAmount5/10000)},
+                        {label: "철분", y: 14-totalAmount6}
                     ]
                 }]
         };
@@ -88,7 +105,7 @@ class NutritionGraph extends Component{
 
         return (
             <div className="main-panel" id="main-panel">
-                <div className="content">
+                <div className="content" id="graph-content">
                     <div className="container-fluid">
                         <h4 className="page-title">Nutritional Status </h4>
                         <div className="row row-card-no-pd">
@@ -96,6 +113,11 @@ class NutritionGraph extends Component{
                                 <CanvasJSChart options={options} />
                             </div>
                         </div>
+                        <h4> 오늘 먹은 음식 </h4>
+                        <EatView data={this.props.eatenData}
+                                 currentUser = {this.props.currentUser}
+                                 onEatDelete={this.handleEatDelete}
+                        />
                     </div>
                 </div>
             </div>
@@ -117,7 +139,8 @@ NutritionGraph.defaultProps = {
 const mapStateToProps = (state) => {
     return{
         eatenData : state.personalgraph.list.data,
-        listStatus : state.personalgraph.list.status
+        listStatus : state.personalgraph.list.status,
+        eatStatus : state.personalpage.eat.eatstatus
     };
 };
 
@@ -125,6 +148,9 @@ const mapDispatchToProps = (dispatch) => {
     return{
         eatenListRequest: (isInitial, listType)=>{
             return dispatch(eatenListRequest(isInitial, listType));
+        },
+        eatDeleteRequest : (user_id, ingredient_code, EATEN_DATE, EATEN_TIME, option)=>{
+            return dispatch(eatDeleteRequest(user_id, ingredient_code, EATEN_DATE, EATEN_TIME, option))
         }
     };
 };

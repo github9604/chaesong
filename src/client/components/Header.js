@@ -170,7 +170,7 @@ class Header extends Component {
             <div>
                 <div className="main-header">
                     <div className="logo-header">
-                        <a href="/mainpage"><img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FbYhiUv%2FbtqvpAxTrJt%2Fnv4acApc3o0VWm7PMBBgKk%2Fimg.png" alt="logo"/> </a>
+                        <a href="/mainpage"><img src="https://i.imgur.com/WjZwBT5.png" alt="logo"/> </a>
                         <button className="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
                                 data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon">
@@ -191,7 +191,7 @@ class Header extends Component {
                                            onChange={this.handleChange}
                                            value={this.state.searchWord}
                                            onKeyPress={this.handleKeyPress}/>
-                                    <div className="input-group-append">
+                                    <div className="input-group-append" onClick={() => this.handleSearch()}>
 								        <span className="input-group-text">
 									    <i className="la la-search search-icon">
                                         </i>
@@ -204,7 +204,9 @@ class Header extends Component {
                     </nav>
                 </div>
                 <FloatingButton/>
-                {side_bar}
+                <div >
+                    {side_bar}
+                </div>
             </div>
         )
 

@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Cookies from 'js-cookie';
 import {ScrapView} from "./index";
-import {scrapListRequest} from "../actions/personal";
+import {scrapListRequest, scrapDeleteRequest} from "../actions/personal";
+
 import {connect} from "react-redux";
 
 class ScrapPage extends Component{
@@ -18,6 +19,24 @@ class ScrapPage extends Component{
         this.props.scrapListRequest(true, undefined);
     }
 
+    handleScrapDelete = (user_id, recipe_code) =>{
+        console.log("scrap delete container ", user_id, recipe_code);
+        return this.props.scrapDeleteRequest(user_id, recipe_code).then(
+            ()=>{
+                if(this.props.scrapstatus === "SUCCESS"){
+                    console.log("scrap delete container success");
+                    this.props.scrapListRequest(true, undefined);
+                    return true;
+                }else{
+                    console.log("scrap delete container fail");
+                    return false;
+                }
+            }
+        );
+    }
+
+
+
     render(){
         return(
             <div className="main-panel" id="main-panel">
@@ -27,6 +46,7 @@ class ScrapPage extends Component{
                         <div className="row">
                             <ScrapView data={this.props.scrapData}
                                        currentUser = {this.props.currentUser}
+                                       onScrapDelete={this.handleScrapDelete}
                                             />
                         </div>
                     </div>
@@ -49,7 +69,8 @@ ScrapPage.defaultProps = {
 const mapStateToProps = (state) => {
     return{
         scrapData : state.personalpage.list.data,
-        listStatus : state.personalpage.list.status
+        listStatus : state.personalpage.list.status,
+        scrapstatus: state.personalpage.scrap.scrapstatus
     };
 };
 
@@ -57,6 +78,9 @@ const mapDispatchToProps = (dispatch) => {
     return{
         scrapListRequest: (isInitial, listType)=>{
             return dispatch(scrapListRequest(isInitial, listType));
+        },
+        scrapDeleteRequest: (user_id, recipe_code) =>{
+            return dispatch(scrapDeleteRequest(user_id, recipe_code));
         }
     };
 };

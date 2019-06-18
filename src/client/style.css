@@ -1,12 +1,29 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300');
 @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
 
+html{
+   background: #76b852;
+}
+
 .form input[type=radio]
 {
     position: relative;
     left: 0;
     float: left;
     -webkit-appearance:radio;
+}
+
+#main-background{
+    height: 100vh;
+    background: #f2f3f8;
+}
+
+#graph-content{
+    background: #f2f3f8;
+}
+
+.eat-box{
+    float: left;
 }
 
 #active, #vegantype, #sex {
@@ -155,10 +172,17 @@ body {
 #full_body{
     min-height: 100vh;
     width: 100%;
+    background: #76b852;
+    /*background: -webkit-linear-gradient(right, #76b852, #8DC26F);
+    background: -moz-linear-gradient(right, #76b852, #8DC26F);
+    background: -o-linear-gradient(right, #76b852, #8DC26F);
+    background: linear-gradient(to left, #76b852, #8DC26F);*/
+    font-family: 'Noto Sans KR', "Roboto", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 #member_body{
-    height : 100%;
     width : 100%;
     background: #76b852;
     background: -webkit-linear-gradient(right, #76b852, #8DC26F);
@@ -191,6 +215,14 @@ body {
 
 #floating-Modal-content{
     margin: 5px;
+}
+
+.recipe-box{
+    float: left;
+}
+
+.scrap-box{
+    float: left;
 }
 
 #recipe-modal-content{
@@ -255,4 +287,8 @@ body {
     height: 38px;
     margin-top: 10px;
     float: left;
+}
+
+#scrap-box{
+    width: 100%;
 }

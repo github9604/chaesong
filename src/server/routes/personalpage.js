@@ -117,7 +117,7 @@ personalpage.use(cors());
 personalpage.get('/scrap', (req, res) => {
     let session = req.session;
     //let new_query = 'SELECT * FROM MemberEats, Recipes WHERE Recipes.recipe_code = MemberEats.recipe_code AND MemberEats.user_id = :now_user';
-    let new_query = 'SELECT * FROM MemberScraps, Recipes WHERE MemberScraps.recipe_code = Recipes.recipe_code AND MemberScraps.user_id = :now_user';
+    let new_query = 'SELECT * FROM MemberScraps, Recipes WHERE MemberScraps.recipe_code = Recipes.recipe_code AND MemberScraps.user_id = :now_user ORDER BY MemberScraps.SCRAP_DATE DESC';
     let values = {
         now_user: session.loginInfo.user_id
     };
@@ -129,7 +129,7 @@ personalpage.get('/scrap', (req, res) => {
 
 personalpage.get('/eaten', (req,res) => {
     let session2 = req.session;
-    let new_query2 = 'SELECT * FROM MemberEats, Ingredients, memberJoins WHERE MemberEats.ingredient_code = Ingredients.ingredient_code AND MemberEats.user_id = :now_user AND memberJoins.user_id = :now_user';
+    let new_query2 = 'SELECT * FROM MemberEats, Ingredients, memberJoins WHERE MemberEats.ingredient_code = Ingredients.ingredient_code AND MemberEats.user_id = :now_user AND memberJoins.user_id = :now_user  ORDER BY MemberEats.EATEN_TIME DESC';
     let values2 = {
         now_user : session2.loginInfo.user_id
     };

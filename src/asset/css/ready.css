@@ -5143,6 +5143,7 @@ body {
   font-size: 18px;
   font-weight: 600;
   line-height: 1.6;
+  float: left;
 }
 .card .card-sub {
   display: block;
@@ -6671,7 +6672,7 @@ body {
     position: relative;
     justify-content: center;
   }
-  
+
   .main-header .logo-header .navbar-toggler {
     position: absolute;
     top: auto;
@@ -6703,7 +6704,7 @@ body {
   }
 
   .topbar_open .navbar-header {
-    transform: translate3d(0, 54px, 0) !important;
+    transform: translate3d(0, 0, 0) !important;
     border-bottom: 1px solid #eee;
   }
   .topbar_open .main-panel {

@@ -12,6 +12,10 @@ const initialState={
         valid: false,
         isLoggedIn: true,
         currentUser: ''
+    },
+    setting:{
+        status: 'INIT',
+        data:{}
     }
 };
 
@@ -99,6 +103,32 @@ export default function authentication(state = initialState, action) {
                     ...state.status,
                     isLoggedIn: false,
                     currentUser: null
+                }
+            };
+        case types.GET_SETTING:
+            console.log('getSetting reducer waiting');
+            return {
+                ...state,
+                setting : {
+                    status: 'WAITING'
+                }
+            };
+        case types.GET_SETTING_SUCCESS:
+            console.log('getSetting reducer success');
+            console.log(action.data);
+            return {
+                ...state,
+                setting : {
+                    status: 'SUCCESS',
+                    data: action.data
+                }
+            };
+        case types.GET_SETTING_FAILURE:
+            console.log('getSetting reducer failure');
+            return {
+                ...state,
+                setting : {
+                    status: 'FAILURE'
                 }
             };
         default:

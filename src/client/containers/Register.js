@@ -18,7 +18,7 @@ class Register extends Component{
                       'Password is too short',
                       'ID already exists'
                     ];
-                    console.log('container fail');
+                    alert('회원가입실패');
                     return false;
                 }
             }

@@ -1,39 +1,40 @@
 import React, {Component} from 'react';
-import {ScrapBox} from '../components';
 import PropTypes from 'prop-types';
+import {EatBox} from "./index";
 
-class ScrapView extends Component{
+
+class EatView extends Component {
     render(){
         const mapToComponents = data => {
-            return data.map((personalpage, i)=>{
+            return data.map((eatenData, i)=>{
                 console.log("personal page test map to component");
                 return (
-                    <ScrapBox
-                        data ={personalpage}
-                        key={personalpage.recipe_code}
+                    <EatBox
+                        data ={eatenData}
+                        key={eatenData.ingredient_code}
                         index={i}
                         current={this.props.currentUser}
                         current_id={this.props.current_id}
-                        onScrapDelete = {this.props.onScrapDelete}
+                        onEatDelete = {this.props.onEatDelete}
                     />
                 );
             })
         };
         return (
-            <div id="scrap-box">
+            <div>
                 {mapToComponents(this.props.data)}
             </div>
         );
     }
 }
 
-ScrapView.propTypes={
+EatView.propTypes={
     data: PropTypes.array,
-    onScrapDelete : PropTypes.func,
+    onEatDelete : PropTypes.func,
 };
-ScrapView.defaultProps={
+EatView.defaultProps={
     data: [],
-    onScrapDelete : (user_id,recipe_code) =>{console.error("scrap delete function is not defined");}
+    onEatDelete : (user_id, ingredient_code, EATEN_DATE, EATEN_TIME, option) =>{console.error("eat delete function is not defined");}
 };
 
-export default ScrapView;
+export default EatView;

@@ -12,7 +12,10 @@ import{
     AUTH_GET_STATUS_FAILURE,
     AUTH_CHANGE,
     AUTH_CHANGE_SUCCESS,
-    AUTH_CHANGE_FAILURE
+    AUTH_CHANGE_FAILURE,
+    GET_SETTING,
+    GET_SETTING_SUCCESS,
+    GET_SETTING_FAILURE
 } from './ActionType';
 
 export function registerRequest(user_id, pw, birthyear, sex, height, weight, active, vegantype) {
@@ -163,5 +166,44 @@ export function logoutRequest(){
 export function logout() {
     return {
         type: AUTH_LOGOUT
+    };
+}
+
+export function getSettingRequest(user_id) {
+    return (dispatch) => {
+        // Inform Login API is starting
+        dispatch(getSetting());
+
+        // API REQUEST
+        return axios.post('/api/mySetting/getSetting', { user_id})
+            .then((response) => {
+                // SUCCEED
+                console.log("getSetting dispatch success");
+                console.log(response.data);
+                dispatch(getSettingSuccess(response.data));
+            }).catch((error) => {
+                // FAILED
+                console.log("dispatch login fail");
+                dispatch(getSettingFailure());
+            });
+    };
+}
+
+export function getSetting() {
+    return {
+        type: GET_SETTING
+    };
+}
+
+export function getSettingSuccess(data) {
+    return {
+        type: GET_SETTING_SUCCESS,
+        data
+    };
+}
+
+export function getSettingFailure() {
+    return {
+        type: GET_SETTING_FAILURE
     };
 }

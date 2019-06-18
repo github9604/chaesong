@@ -9,9 +9,11 @@ class personalview extends Component{
         this.props.scrapListRequest(true, undefined);
     }
 
+
+
     render(){
               return (
-            <div>
+            <div id="main-background">
                 <ScrapPage data={this.props.scrapData}
                            currentUser = {this.props.currentUser}
                               />

@@ -20,7 +20,6 @@ export default function search(state = initialState, action) {
             }
         case types.INGREDIENT_SEARCH_SUCCESS:
             console.log("ingredient search reducer success");
-            console.log(action.ingredient_names);
             return {
                 ...state,
                 status: 'SUCCESS',

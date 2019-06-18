@@ -50,7 +50,7 @@ class MainPage extends Component {
         let re = /(login|register)/;
         let isAuth = re.test(this.props.location.pathname);
         return (
-            <div>
+            <div id="main-background">
                 {isAuth ? undefined : <Main isLoggedIn={this.props.status.isLoggedIn}/>}
                 {this.props.children}
             </div>

@@ -2,30 +2,36 @@ import {connect} from "react-redux";
 import React, {Component} from 'react';
 import {SettingUI} from '../components';
 import {infoListRequest} from "../actions/personal";
-import {changeRequest} from "../actions/authentication";
+import {changeRequest, getSettingRequest} from "../actions/authentication";
+import Cookies from "js-cookie";
 
 class UserSettings extends  Component{
+
+
 
     handleRegister = (birthyear, sex, height, weight, active, vegantype) => {
         return this.props.changeRequest(birthyear, sex, height, weight, active, vegantype).then(
             () => {
-                this.props.history.push('/mainpage');
-                return true;
+                if(this.props.updateStatus === 'SUCCESS'){
+                    alert('개인정보가 수정되었습니다.');
+                    document.location.href = '/mainpage';
+                    return true;
+                }else{
+                    alert('개인정보 수정에 실패했습니다.');
+                }
             }
         )
     };
 
-    componentDidMount() {
-        this.props.infoListRequest(true, undefined);
-    }
 
     render(){
         return (
             <div>
-                <SettingUI data={this.props.infoData}
+                <SettingUI
                            onRegister={this.handleRegister}/>
             </div>
         );
+
     }
 
 }
@@ -33,7 +39,7 @@ class UserSettings extends  Component{
 const mapStateToProps = (state) =>{
     return{
         infoData : state.personalpage.list.data,
-        listStatus : state.personalpage.list.status
+        updateStatus : state.authentication.register.status,
     };
 };
 

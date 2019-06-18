@@ -37,8 +37,8 @@ class RecipeBox extends Component{
         console.log("eat click");
         let user_id = Cookies.get('member');
         let recipe_code = this.props.data.recipe_code;
-        this.props.onEat(user_id,recipe_code);
-        console.log("eat recipe box : ",user_id, recipe_code);
+        this.props.onEat(user_id,recipe_code, 0);
+        console.log("eat recipe box : ",user_id, recipe_code, 0);
     }
 
     render() {
@@ -66,7 +66,7 @@ class RecipeBox extends Component{
                     <div className="card-header" onClick={() => this.openModal()}>
                         <h3 className="card-title" onClick={() => this.openModal()} >{this.props.data.recipe_name}</h3>
                     </div>
-                    <div className="card-body"onClick={() => this.openModal()}>
+                    <div className="card-body" onClick={() => this.openModal()}>
                         <img src={this.props.data.imgurl} onClick={() => this.openModal()} alt="recipe"/>
                         <br/>
                     </div>
@@ -103,7 +103,7 @@ RecipeBox.defaultProps={
     onScrap: (user_id, recipe_code) =>{
       console.error('scrap recipe function net defined');
     },
-    onEat: (user_id, recipe_code) =>{
+    onEat: (user_id, recipe_code, option) =>{
         console.error('eat recipe function net defined');
     },
     currentUser: ''

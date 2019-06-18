@@ -8,7 +8,13 @@ import {
     SCRAP_LOAD_FAILURE,
     INFO_LOAD,
     INFO_LOAD_SUCCESS,
-    INFO_LOAD_FAILURE
+    INFO_LOAD_FAILURE,
+    SCRAP_DELETE,
+    SCRAP_DELETE_SUCCESS,
+    SCRAP_DELETE_FAILURE,
+    EAT_DELETE,
+    EAT_DELETE_SUCCESS,
+    EAT_DELETE_FAILURE
 } from './ActionType';
 
 export function infoListRequest(isInitial){
@@ -112,5 +118,75 @@ export function scrapLoadFailure() {
 export function eatenLoadFailure() {
     return{
         type: EATEN_LIST_FAILURE
+    };
+}
+
+export function scrapDeleteRequest(user_id, recipe_code) {
+    return (dispatch) =>{
+        dispatch(scrapDelete());
+
+        return axios.post('/api/scrap/delete', {user_id,recipe_code})
+            .then((response)=>{
+                console.log("post action: ",user_id, recipe_code);
+                console.log("scrap dispatch success ");
+                dispatch(scrapDeleteSuccess());
+            }).catch((error)=>{
+                console.log("scrap dispatch failure");
+                dispatch(scrapDeleteFailure(error.response.data.code));
+            });
+    }
+}
+
+export function scrapDelete() {
+    return{
+        type : SCRAP_DELETE
+    };
+}
+
+export function scrapDeleteSuccess() {
+    return{
+        type: SCRAP_DELETE_SUCCESS
+    };
+}
+
+export function scrapDeleteFailure(error) {
+    return {
+        type: SCRAP_DELETE_FAILURE,
+        error
+    };
+}
+
+export function eatDeleteRequest(user_id, ingredient_code, EATEN_DATE, EATEN_TIME, option) {
+    return (dispatch) =>{
+        dispatch(eatDelete());
+
+        return axios.post('/api/eat/delete', {user_id,ingredient_code, EATEN_DATE, EATEN_TIME, option})
+            .then((response)=>{
+                console.log("post action: ",user_id, ingredient_code, EATEN_DATE, EATEN_TIME, option);
+                console.log("eat delete dispatch success ");
+                dispatch(eatDeleteSuccess());
+            }).catch((error)=>{
+                console.log("eat delete dispatch failure");
+                dispatch(eatDeleteFailure(error.response.data.code));
+            });
+    }
+}
+
+export function eatDelete() {
+    return{
+        type : EAT_DELETE
+    };
+}
+
+export function eatDeleteSuccess() {
+    return{
+        type: EAT_DELETE_SUCCESS
+    };
+}
+
+export function eatDeleteFailure(error) {
+    return {
+        type: EAT_DELETE_FAILURE,
+        error
     };
 }

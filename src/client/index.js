@@ -26,12 +26,8 @@ ReactDOM.render(
             <div id = "full_body">
                 <Route exact path="/" component={() => <Redirect to="/login" />}/>
                 <Route path="/" component={App}/>
-                <div id="member_body">
                 <Route path="/register" component={Register}/>
-                </div>
-                <div id="member_body">
                 <Route path="/login" component={Login}/>
-                </div>
                 <Route path="/settings" component={UserSettings}/>
                 <Route path="/MainPage" component={MainPage}/>
                 <Route path="/recipeview" component={recipeview}/>

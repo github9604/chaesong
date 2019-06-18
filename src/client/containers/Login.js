@@ -20,6 +20,7 @@ class Login extends Component {
                     this.props.history.push('/MainPage');
                     return true;
                 } else {
+                    alert('로그인에 실패했습니다.');
                     return false;
                 }
             }
