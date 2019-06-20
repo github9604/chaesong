@@ -13,5 +13,6 @@ export default combineReducers({
     personalpage,
     search,
     ingredient,
-    personalgraph
+    personalgraph,
+    recommendpage
 });

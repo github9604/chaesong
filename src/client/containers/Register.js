@@ -10,7 +10,12 @@ class Register extends Component{
             ()=> {
                 if(this.props.status === "SUCCESS"){
                     console.log('container success');
-                    this.props.history.push('/login');
+                    let loginData = {
+                        isLoggedIn: true,
+                        user_id: user_id
+                    };
+                    document.cookie = 'key=' + btoa(JSON.stringify(loginData));
+                    this.props.history.push('/recommendview');
                     return true;
                 } else {
                     let errorMessage = [

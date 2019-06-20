@@ -1,42 +1,42 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import Cookies from 'js-cookie';
-import {ScrapView} from "./index";
-import {scrapListRequest} from "../actions/personal";
-import {connect} from "react-redux";
+import {RecommendBox} from '../components';
 
 class RecommendPage extends Component{
-    constructor(props){
-        super(props);
-        this.state={
-            user_Id : Cookies.get('member'),
-        }
-    } // cookie
+
     render(){
+        const mapToComponents = data => {
+            return data.map((recipe, i)=>{
+            return (
+                <RecommendBox
+                    data={recipe}
+                    key={recipe.recipe_code}
+                    index={i}
+                    current={this.props.currentUser}
+                    onRecommend={this.props.onRecommend}
+                />
+
+            );
+        })
+    };
+
         return(
-            <div className="main-panel" id="main-panel">
-                <div className="content">
-                    <div className="container-fluid">
-                        <h4 className="page-title">스크랩 레시피</h4>
-                        <div className="row">
-                            <h3> hello </h3>
-                        </div>
-                    </div>
-                </div>
+            <div>
+                {mapToComponents(this.props.data)}
             </div>
-        )
+        );
     }
 }
 
 RecommendPage.propTypes = {
-    isLoggedIn : PropTypes.bool,
-    onLogout: PropTypes.func
+    mode: PropTypes.bool,
+    data: PropTypes.array,
+    onRecommend: PropTypes.func,
 };
 
 RecommendPage.defaultProps = {
-    isLoggedIn : false,
-    onLogout: () => {console.error("logout function not defined")}
+    data: [],
+    onRecommend: (user_id,recipe_code) =>{console.error("recommend function is not defined");}
 };
 
 export default RecommendPage;
