@@ -108,7 +108,7 @@ ingredient.post('/eat',(req,res)=>{
                 Quantity = count;
                 break;
             case "6":
-                Quantity = count;
+                Quantity = count * 210;
                 break;
             case "7":
                 Quantity = count * 1.8;
@@ -121,6 +121,9 @@ ingredient.post('/eat',(req,res)=>{
                 break;
             case "10":
                 Quantity = count * 2.5;
+                break;
+            case "10":
+                Quantity = count;
                 break;
             default:
                 console.log("default");

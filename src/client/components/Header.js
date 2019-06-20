@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import Cookies from "js-cookie";
 import jQuery from "jquery";
 import FloatingButton from "./FloatingButton";
+import { connect } from 'react-redux';
+import {vegekeyListRequest} from '../actions/vegekeyword';
 
 window.$ = window.jQuery = jQuery;
 
@@ -17,7 +19,9 @@ class Header extends Component {
             eggchecked:true,
             seafood : 0,
             milk: 0,
-            egg: 0
+            egg: 0,
+            vegeKeyData : [],
+            vegeKeyRandom : []
         }
     }
 
@@ -48,7 +52,35 @@ class Header extends Component {
         }
     }
 
+    shuffleArray = (vegeKeyArray) =>{
+        let arr = [];
+        let VAR = vegeKeyArray[0];
+        let temp;
+        for (let i=0; i <5 ; i++) {
+            while(1){
+                const j = Math.floor(Math.random() * (20));
+                temp = VAR[j];
+                console.log(temp);
+                if(!arr.find((item) => {
+                    return item === temp;
+                })){
+                    arr.push(temp);
+                    break;
+                }
+            }
+        }
+        return arr;
+    };
+
     componentDidMount() {
+        this.props.vegekeyListRequest(true, undefined).then(
+            ()=>{
+                this.setState({
+                    vegeKeyData : this.props.vegeKeyData,
+                    vegeKeyRandom : this.shuffleArray(this.props.vegeKeyData)
+                })
+            });
+
         let toggle_sidebar = false;
         let toggle_topbar = false;
         let nav_open = 0;
@@ -89,29 +121,28 @@ class Header extends Component {
         }
     }
 
+
+
     render(){
         const userID= Cookies.get('member');
         const vegantype = Cookies.get('vegantype');
+        console.log("vegekeyArray");
+        console.log(this.state.vegeKeyData);
+        const vegeKeyArray = this.state.vegeKeyData;
+        const vegeKeyShuffle = this.state.vegeKeyRandom;
 
 
         const topbar = (
             <div className="navbar-nav topbar-nav ml-md-auto align-items-center">
                 <ul className="navbar-nav topbar-nav ml-md-auto align-items-center">
-                    <li className="nav-item dropdown hidden-caret">
-                        #크롤링
-                    </li>
-                    <li className="nav-item dropdown hidden-caret">
-                        #크롤링
-                    </li>
-                    <li className="nav-item dropdown">
-                        #크롤링
-                    </li>
-                    <li className="nav-item dropdown">
-                        #크롤링
-                    </li>
-                    <li className="nav-item dropdown">
-                        #크롤링
-                    </li>
+                    {vegeKeyShuffle.map((vegeKey, idx) =>{
+                        const url = "MainPage?searchWord=" + vegeKey.keyword;
+                        return(
+                            <li className="nav-item dropdown hidden-caret" key={idx}>
+                                <a href={url} >#{vegeKey.keyword}</a>
+                            </li>
+                        );
+                    })}
                 </ul>
             </div>
         );
@@ -234,7 +265,22 @@ Header.defaultProps = {
     history: {}
 };
 
+const mapStateToProps = (state) => {
+    return{
+        vegeKeyData: state.vegekeyword.list.data,
+        listStatus: state.vegekeyword.list.status,
+        isLast: state.vegekeyword.list.isLast
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        vegekeyListRequest: (isInitial, listType)=>{
+            return dispatch(vegekeyListRequest(isInitial, listType));
+        }
+    }
+};
 
 
-export default Header;
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
 

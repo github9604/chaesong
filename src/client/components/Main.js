@@ -159,11 +159,11 @@ class Main extends Component{
                         <div className="container-fluid">
                             <h4 className="page-title"> 추천 레시피 </h4>
                             <RecommendViewTest data={this.props.recommendData}
-                                                currentUser = {this.props.currentUser}
-                                                onScrap={this.handleScrap}
-                                                onEat={this.handleEat}
-                                                onSearch={this.handleSearch}
-                                                history={this.props.history}/>
+                                               currentUser = {this.props.currentUser}
+                                               onScrap={this.handleScrap}
+                                               onEat={this.handleEat}
+                                               onSearch={this.handleSearch}
+                                               history={this.props.history}/>
                             <h4 className="page-title">전체 레시피</h4>
                             <RecipeViewTest data={this.props.searchData}
                                             currentUser = {this.props.currentUser}

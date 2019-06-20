@@ -47,6 +47,9 @@ const MemberJoin = sequelize.define(
         },
         sex:{
             type: Sequelize.INTEGER
+        },
+        calorieForDay:{
+            type: Sequelize.INTEGER
         }
     },
     {

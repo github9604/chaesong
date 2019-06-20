@@ -7,7 +7,6 @@ import {
     RECOMMEND_LIST_SUCCESS,
     RECOMMEND_LIST_FAILURE, RECIPE_SEARCH_SUCCESS
 } from './ActionType';
-import {recipeSearchFailure, recipeSearchSuccess} from "./recipe";
 
 export function recommendInsertRequest(user_id, recipe_code) {
     return (dispatch) => {
@@ -52,6 +51,13 @@ export function recommendInsertList() {
     };
 }
 
+export function recommendInputSuccess() {
+    return {
+        type: RECOMMEND_INSERT_SUCCESS
+    };
+}
+
+
 export function recommendListSuccess(searchWord, seafood, milk, egg, data, isInitial, listType){
     return{
         type: RECOMMEND_LIST_SUCCESS,
@@ -63,12 +69,6 @@ export function recommendListSuccess(searchWord, seafood, milk, egg, data, isIni
         isInitial,
         listType
     }
-}
-
-export function recommendInputSuccess() {
-    return {
-        type: RECOMMEND_INSERT_SUCCESS
-    };
 }
 
 export function recommendListFailure() {

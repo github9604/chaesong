@@ -156,6 +156,8 @@ router.post('/signup', (req, res)=>{
        calorieForDay : 0
    };
    console.log(memberData.vegantype+" / " + memberData.sex);
+    let vegantype = "";
+
 
     const grantStandWeight = (height) => {
         let standWeight;
@@ -241,6 +243,28 @@ router.post('/signup', (req, res)=>{
                            _id : memberJoin.user_id,
                            user_id: memberJoin.user_id
                        };
+                       console.log("vtype: " + req.body.vegantype);
+                       switch (req.body.vegantype) {
+                           case "1":
+                               vegantype = "페스코 베지테리언";
+                               break;
+                           case "2":
+                               vegantype = "락토 오보 베지테리언";
+                               break;
+                           case "3":
+                               vegantype = "오보 베지테리언";
+                               break;
+                           case "4":
+                               vegantype = "락토 베지테리언";
+                               break;
+                           case "5":
+                               vegantype = "비건";
+                               break;
+                           default:
+                               console.log("case error");
+                               break;
+                       }
+
                        res.cookie("member", req.body.user_id,{
                            expires: new Date(Date.now() + 900000)
                        }); // 지워도 괜찮은 코드

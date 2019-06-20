@@ -19,9 +19,9 @@ class Register extends Component{
                     return true;
                 } else {
                     let errorMessage = [
-                      'Invalid ID',
-                      'Password is too short',
-                      'ID already exists'
+                        'Invalid ID',
+                        'Password is too short',
+                        'ID already exists'
                     ];
                     alert('회원가입실패');
                     return false;
@@ -47,11 +47,11 @@ const mapStateToProps = (state) =>{
 };
 
 const mapDispatchToProps = (dispatch) =>{
-  return{
-     registerRequest: (user_id, pw, birthyear, sex, height, weight, active, vegantype) =>{
-         return dispatch(registerRequest(user_id, pw, birthyear, sex, height, weight, active, vegantype));
-     }
-  } ;
+    return{
+        registerRequest: (user_id, pw, birthyear, sex, height, weight, active, vegantype) =>{
+            return dispatch(registerRequest(user_id, pw, birthyear, sex, height, weight, active, vegantype));
+        }
+    } ;
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Register);

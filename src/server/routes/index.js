@@ -10,6 +10,7 @@ import eat from './eat';
 import search from './search';
 import ingredient from './ingredient';
 import mySetting from './mySetting';
+import vegeKeyword from './vegeKeyword';
 
 const router = express.Router();
 
@@ -25,5 +26,6 @@ router.use('/eat', eat);
 router.use('/search',search);
 router.use('/ingredient',ingredient);
 router.use('/mySetting',mySetting);
+router.use('/vegeKeyword', vegeKeyword);
 
 export default router;

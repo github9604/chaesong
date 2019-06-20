@@ -24,7 +24,7 @@ ReactDOM.render(
     <Provider store={store}>
         <Router>
             <div id = "full_body">
-                <Route exact path="/" component={() => <Redirect to="/login" />}/>
+                <Route exact path="/" component={() => <Redirect to="/Start" />}/>
                 <Route path="/" component={App}/>
                 <Route path="/register" component={Register}/>
                 <Route path="/login" component={Login}/>

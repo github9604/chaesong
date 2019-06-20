@@ -61,6 +61,7 @@ class SettingUI extends Component{
         console.log('sex change' + e.target.value);
         this.setState(nextState);
     }
+
     vegantypeChange = (e) => {
         let nextState = {};
         nextState[e.target.name] = e.target.value;

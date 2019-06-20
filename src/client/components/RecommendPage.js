@@ -7,18 +7,18 @@ class RecommendPage extends Component{
     render(){
         const mapToComponents = data => {
             return data.map((recipe, i)=>{
-            return (
-                <RecommendBox
-                    data={recipe}
-                    key={recipe.recipe_code}
-                    index={i}
-                    current={this.props.currentUser}
-                    onRecommend={this.props.onRecommend}
-                />
+                return (
+                    <RecommendBox
+                        data={recipe}
+                        key={recipe.recipe_code}
+                        index={i}
+                        current={this.props.currentUser}
+                        onRecommend={this.props.onRecommend}
+                    />
 
-            );
-        })
-    };
+                );
+            })
+        };
 
         return(
             <div>

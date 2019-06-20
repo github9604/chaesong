@@ -101,14 +101,12 @@ recommendPage.get('/:searchWord/:seafood/:milk/:egg', (req,res)=>{
 
     let session = req.session;
     //let new_query = 'SELECT * FROM MemberEats, Recipes WHERE Recipes.recipe_code = MemberEats.recipe_code AND MemberEats.user_id = :now_user';
-    let new_query = 'SELECT DISTINCT sort1, count(sort1) as CountOf from memberRecommends where memberRecommends.user_id = :now_user group by sort1 ORDER BY sort1 ASC ';
+    let new_query = 'SELECT DISTINCT sort1, count(sort1) as CountOf from memberRecommends where memberRecommends.user_id = :now_user group by sort1 ';
     let values = {
         now_user: session.loginInfo.user_id
     };
-    sequelize.query(new_query, {replacements: values, raw:true})
-        .then(function(results){
-            console.log(results.toJson());
-        })
+    sequelize.query(new_query, {replacements: values})
+        .then(MemberScraps => {console.log(MemberScraps)})
 
     Recipe.findAll({
         limit: 4,
@@ -159,7 +157,7 @@ recommendPage.post('/insert', (req, res) => {
             ingredient_code: req.body.recipe_code
         }
     }).then(function(result){
-        recommendData.sort1 = result.sort1;
+            recommendData.sort1 = result.sort1;
         }
     )
 
@@ -171,33 +169,33 @@ recommendPage.post('/insert', (req, res) => {
             recipe_code : req.body.recipe_code
         }
     }).then((MemberRecommend)=>{
-            if(!MemberRecommend){
-                memberRecommend.create(recommendData)
-                    .then(memberRecommend=>{
-                        console.log("저장 성공");
-                        return res.json({success: true})
-                    })
-                    .catch(err=>{
-                        return res.send('error' + err)
-                    })
-            }
-            else{
-                memberRecommend.destroy({
-                    where:{
-                        user_id : req.body.user_id,
-                        recipe_code : req.body.recipe_code
-                    }
+        if(!MemberRecommend){
+            memberRecommend.create(recommendData)
+                .then(memberRecommend=>{
+                    console.log("저장 성공");
+                    return res.json({success: true})
                 })
-                    .then(memberRecommend=>{
-                        console.log("scrap delete");
-                        return res.json({success: true})
-                    })
-                    .catch(err=>{
-                        console.log("scrap error");
-                        return res.send('error' + err)
-                    })
-            }
-        })
+                .catch(err=>{
+                    return res.send('error' + err)
+                })
+        }
+        else{
+            memberRecommend.destroy({
+                where:{
+                    user_id : req.body.user_id,
+                    recipe_code : req.body.recipe_code
+                }
+            })
+                .then(memberRecommend=>{
+                    console.log("scrap delete");
+                    return res.json({success: true})
+                })
+                .catch(err=>{
+                    console.log("scrap error");
+                    return res.send('error' + err)
+                })
+        }
+    })
         .catch(err=>{
             return res.send('error' + err)
         })
